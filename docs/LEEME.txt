@@ -1,0 +1,27 @@
+JARVIS - Asistente de voz local en español (Termux, Samsung S24 FE)
+Todo corre en el teléfono, sin internet ni APIs.
+
+FLUJO
+Micrófono -> Whisper (voz a texto) -> órdenes locales o modelo -> voz.
+1. Un hilo graba en trozos de 3 s y descarta el audio bajo el umbral.
+2. Whisper base detecta "Jarvis"; responde "Sí, señor." y abre 4 s para la orden.
+3. Whisper small transcribe la orden (audio filtrado y normalizado).
+4. Se corrigen palabras mal oídas y se buscan órdenes locales.
+5. Si no es una orden local, responde el modelo Qwen2.5-1.5B (llama.cpp).
+
+ÓRDENES LOCALES (sin modelo)
+Hora y fecha, batería, linterna, volumen, temporizador, notas, abrir apps.
+
+COMANDOS (prompt normal de Termux)
+jarvisv                          arranca el asistente
+DEBUG=1 jarvisv                  muestra lo que oye Whisper
+python3 tests/verificar.py       comprueba el sistema
+tmux kill-session -t llm         apaga el modelo
+
+SI ALGO FALLA
+"Recording already in progress": pkill -f jarvis_voz; termux-microphone-record -q
+Verificar descargas: head -c 4 archivo (debe decir GGUF)
+Conectar el cargador: con poca batería todo se vuelve lento
+
+PRIVACIDAD
+No subir audios, notas personales ni tokens (ver .gitignore).
