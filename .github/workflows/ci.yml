@@ -1,0 +1,19 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  verificar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Compilar Python
+        run: python -m py_compile $(git ls-files '*.py')
+      - name: Validar scripts de shell
+        run: bash -n scripts/capturar.sh
+      - name: Validar manifiesto
+        run: python -m json.tool models/manifest.json > /dev/null
+      - name: Sin modelos ni audios en el repositorio
+        run: |
+          if git ls-files | grep -E '\.(gguf|bin|wav|m4a)$'; then echo "Hay archivos prohibidos"; exit 1; fi

@@ -78,7 +78,7 @@ def oir(wav, bueno):
     if o.returncode == 0 and os.path.exists(n):
         wav = n
     if bueno:
-        modelo, extra = WM_BUENO, ["-bs", "3", "-bo", "3"]
+        modelo, extra = WM_BUENO, ["-bs", "3", "-bo", "3", "-ac", "512"]
     else:
         modelo, extra = WM_RAPIDO, ["-bs", "1", "-bo", "1", "-nf", "-ac", "768"]
     r = subprocess.run([WHISPER, "-m", modelo, "-f", wav, "-l", "es", "-nt", "-np",
