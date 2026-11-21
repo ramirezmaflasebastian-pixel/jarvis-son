@@ -87,6 +87,9 @@ def oir(wav, bueno):
     t = r.stdout.strip()
     if re.fullmatch(r"[\[\(].*[\]\)]", t) or BASURA.search(t):
         return ""
+    pal = t.lower().split()
+    if len(pal) > 30 or (len(pal) >= 8 and len(set(pal)) / len(pal) < 0.5):
+        return ""
     return t
 
 NOTAS = f"{BASE}/notas.txt"
