@@ -1,4 +1,5 @@
 from acciones import acciones as acciones_mod, corregir
+import estadojson as EJ
 import json, subprocess, time, urllib.request, os, re, threading, queue
 
 BASE = os.path.expanduser("~/jarvis-son")
@@ -260,11 +261,14 @@ def confirmar():
     ignorar_hasta = time.time()
     dur[0] = CMD_SECONDS
     reiniciar.set()
+    EJ.registrar(estado="Grabando", transcripcion="", respuesta="")
     h.join()
 
 def responder(texto):
     global ignorar_hasta
     print("Tú:", texto)
+    _t0 = time.time()
+    EJ.registrar(estado="Generando", transcripcion=texto, respuesta="")
     resp = local(corregir(texto))
     if resp is None:
         try:
@@ -277,13 +281,19 @@ def responder(texto):
             resp = preguntar(texto)
         except Exception as e:
             print("Error con el modelo:", e)
+            EJ.registrar(estado="Error")
             ignorar_hasta = time.time()
             return
+    _t1 = time.time()
+    EJ.registrar(estado="Hablando", respuesta=resp)
     print("Jarvis:", resp)
     hablar(resp)
     time.sleep(0.4)
     ignorar_hasta = time.time()
+    EJ.fin_turno(_t1 - _t0, time.time() - _t1)
 
+oir = EJ.medido("stt", oir)
+EJ.registrar(estado="Listo")
 print("Escuchando en silencio. Di 'Jarvis', espera el 'Sí, señor' y pregunta. Ctrl+C para salir.")
 mic("-q")
 threading.Thread(target=grabador, daemon=True).start()

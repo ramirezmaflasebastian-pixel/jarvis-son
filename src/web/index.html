@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jarvis-son V1</title>
+<style>
+body{margin:0;background:#0d1117;color:#e6edf3;font-family:sans-serif;padding:16px}
+h1{font-size:18px;margin:0 0 12px;color:#8b949e}
+#est{font-size:34px;font-weight:bold;text-align:center;padding:22px;border-radius:14px;background:#30363d}
+.Listo{background:#238636!important}.Grabando{background:#1f6feb!important}
+.Generando{background:#9e6a03!important}.Hablando{background:#8957e5!important}
+.Error{background:#da3633!important}
+.caja{background:#161b22;border-radius:10px;padding:12px;margin-top:12px}
+.caja b{color:#8b949e;font-size:12px;display:block;margin-bottom:4px}
+.t{display:flex;gap:8px;margin-top:12px}.t div{flex:1;background:#161b22;border-radius:10px;padding:10px;text-align:center}
+.t span{display:block;font-size:22px;font-weight:bold}
+small{color:#8b949e}
+</style></head><body>
+<h1>JARVIS-SON V1 · Cotecnova</h1>
+<div id="est">...</div>
+<div class="caja"><b>TÚ DIJISTE</b><span id="tr">-</span></div>
+<div class="caja"><b>JARVIS RESPONDE</b><span id="rs">-</span></div>
+<div class="t">
+<div><small>Voz a texto</small><span id="a">0</span>s</div>
+<div><small>Respuesta</small><span id="b">0</span>s</div>
+<div><small>Hablar</small><span id="c">0</span>s</div>
+<div><small>Turnos</small><span id="n">0</span></div>
+</div>
+<script>
+const $=i=>document.getElementById(i);
+async function f(){try{
+const d=await (await fetch("/estado.json",{cache:"no-store"})).json();
+$("est").textContent=d.estado;$("est").className=d.estado;
+$("tr").textContent=d.transcripcion||"-";$("rs").textContent=d.respuesta||"-";
+$("a").textContent=d.t_stt;$("b").textContent=d.t_slm;$("c").textContent=d.t_tts;$("n").textContent=d.turnos;
+}catch(e){$("est").textContent="Sin datos";$("est").className="";}}
+setInterval(f,500);f();
+</script></body></html>
