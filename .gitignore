@@ -66,3 +66,22 @@ vcpkg_installed/
 # test output & cache
 Testing/
 .cache/
+
+llama.cpp/
+whisper.cpp/
+models/*
+!models/manifest.json
+*.gguf
+*.bin
+*.bak*
+*.m4a
+*.wav
+notas.txt
+rec*
+__pycache__/
+parche*.py
+jarvis.py
+jarvis_a.py
+jv1.py
+jv2.py
+jv_acc.py
