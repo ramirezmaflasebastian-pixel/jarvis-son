@@ -1,3 +1,32 @@
 {
-  "models": []
+  "nota": "No se versionan pesos; descargar desde el origen y verificar SHA-256.",
+  "modelos": [
+    {
+      "nombre": "Qwen2.5-1.5B-Instruct Q4_K_M",
+      "archivo": "qwen2.5-1.5b-instruct-q4_k_m.gguf",
+      "uso": "SLM",
+      "origen": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF",
+      "licencia": "Apache-2.0",
+      "tamano_mb": 1117.3,
+      "sha256": "6a1a2eb6d15622bf3c96857206351ba97e1af16c30d7a74ee38970e434e9407e"
+    },
+    {
+      "nombre": "Whisper base",
+      "archivo": "ggml-base.bin",
+      "uso": "STT detección",
+      "origen": "https://huggingface.co/ggerganov/whisper.cpp",
+      "licencia": "MIT",
+      "tamano_mb": 148.0,
+      "sha256": "60ed5bc3dd14eea856493d334349b405782ddcaf0028d4b5df4088345fba2efe"
+    },
+    {
+      "nombre": "Whisper small q5_1",
+      "archivo": "ggml-small-q5_1.bin",
+      "uso": "STT comandos",
+      "origen": "https://huggingface.co/ggerganov/whisper.cpp",
+      "licencia": "MIT",
+      "tamano_mb": 190.1,
+      "sha256": "ae85e4a935d7a567bd102fe55afc16bb595bdb618e11b2fc7591bc08120411bb"
+    }
+  ]
 }
