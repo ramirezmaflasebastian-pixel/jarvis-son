@@ -8,6 +8,7 @@ WM_RAPIDO = f"{BASE}/whisper.cpp/models/ggml-base.bin"
 WM_BUENO = f"{BASE}/whisper.cpp/models/ggml-small-q5_1.bin"
 URL = "http://127.0.0.1:8080/v1/chat/completions"
 CHUNK = 3
+DISPARO = BASE + "/disparo.flag"
 CMD_SECONDS = 4
 GAP = 0.2
 UMBRAL_DB = -38
@@ -304,6 +305,20 @@ hablar("Listo")
 ignorar_hasta = time.time()
 esperando = False
 pendiente = ""
+
+def vigilar():
+    global esperando, pendiente
+    while True:
+        time.sleep(0.2)
+        if os.path.exists(DISPARO):
+            os.remove(DISPARO)
+            confirmar()
+            pendiente = ""
+            esperando = True
+
+if os.path.exists(DISPARO):
+    os.remove(DISPARO)
+threading.Thread(target=vigilar, daemon=True).start()
 
 while True:
     while cola.qsize() > 2:

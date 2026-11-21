@@ -11,6 +11,13 @@ class H(http.server.SimpleHTTPRequestHandler):
     def end_headers(self):
         self.send_header("Cache-Control", "no-store")
         super().end_headers()
+    def do_POST(self):
+        if self.path.split("?")[0] == "/hablar":
+            open(B + "/disparo.flag", "w").close()
+            self.send_response(204)
+        else:
+            self.send_response(404)
+        self.end_headers()
     def log_message(self, *a):
         pass
 

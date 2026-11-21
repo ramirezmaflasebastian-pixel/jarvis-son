@@ -14,9 +14,12 @@ h1{font-size:18px;margin:0 0 12px;color:#8b949e}
 .t{display:flex;gap:8px;margin-top:12px}.t div{flex:1;background:#161b22;border-radius:10px;padding:10px;text-align:center}
 .t span{display:block;font-size:22px;font-weight:bold}
 small{color:#8b949e}
+button{width:100%;margin-top:12px;padding:18px;font-size:22px;font-weight:bold;border:0;border-radius:14px;background:#1f6feb;color:#fff}
+button:active{background:#388bfd}
 </style></head><body>
 <h1>JARVIS-SON V1 · Cotecnova</h1>
 <div id="est">...</div>
+<button onclick="hablar()">Hablar</button>
 <div class="caja"><b>TÚ DIJISTE</b><span id="tr">-</span></div>
 <div class="caja"><b>JARVIS RESPONDE</b><span id="rs">-</span></div>
 <div class="t">
@@ -33,5 +36,6 @@ $("est").textContent=d.estado;$("est").className=d.estado;
 $("tr").textContent=d.transcripcion||"-";$("rs").textContent=d.respuesta||"-";
 $("a").textContent=d.t_stt;$("b").textContent=d.t_slm;$("c").textContent=d.t_tts;$("n").textContent=d.turnos;
 }catch(e){$("est").textContent="Sin datos";$("est").className="";}}
+async function hablar(){try{await fetch("/hablar",{method:"POST"});}catch(e){}}
 setInterval(f,500);f();
 </script></body></html>
